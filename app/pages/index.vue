@@ -140,7 +140,7 @@ watch(isLightboxOpen, (newValue) => {
 <style scoped>
 .home-container {
   min-height: 100vh;
-  background-image: url('/public/max.jpg');
+  background-image: url('/public/images/max.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
