@@ -6,6 +6,9 @@ const steps = ref(4)
 const src = ref('')
 const gallery = ref([])
 const loading = ref(false)
+// Lightbox state
+const isLightboxOpen = ref(false)
+const currentLightboxImage = ref('')
 
 async function fetchGallery() {
   try {
@@ -27,7 +30,7 @@ async function generateImage() {
       },
     })
     src.value = `/images/${pathname}`
-    gallery.value.unshift(pathname) // Add the newly generated image to the gallery
+    gallery.value.unshift(pathname)
   } catch (error) {
     console.error('Error generating image:', error)
   } finally {
@@ -35,8 +38,13 @@ async function generateImage() {
   }
 }
 
+function openLightbox(image) {
+  currentLightboxImage.value = `/images/${image}`
+  isLightboxOpen.value = true
+}
+
 onMounted(() => {
-  fetchGallery() // Fetch images from R2 bucket on mount
+  fetchGallery()
 })
 </script>
 
@@ -74,9 +82,25 @@ onMounted(() => {
 
     <!-- Gallery Section -->
     <div v-if="gallery.length > 0" class="gallery grid grid-cols-3 gap-4 w-full mt-6">
-      <div v-for="(image, index) in gallery" :key="index" class="border border-gray-200 rounded-lg overflow-hidden">
+      <div
+        v-for="(image, index) in gallery"
+        :key="index"
+        class="border border-gray-200 rounded-lg overflow-hidden cursor-pointer"
+        @click="openLightbox(image)"
+      >
         <img :src="`/images/${image}`" alt="Generated image" class="w-full h-full object-cover">
       </div>
     </div>
+
+    <!-- Lightbox Modal -->
+    <UModal v-model="isLightboxOpen">
+      <UCard>
+        <img 
+          :src="currentLightboxImage" 
+          alt="Lightbox image" 
+          class="max-w-full max-h-[80vh] object-contain"
+        >
+      </UCard>
+    </UModal>
   </div>
 </template>
