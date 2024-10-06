@@ -26,7 +26,7 @@ async function generateImage() {
     <form class="w-full" @submit.prevent="generateImage()">
       <UTextarea
         v-model="prompt"
-        placeholder="Enter a prompt"
+        placeholder="Enter a detailed prompt"
         class="w-full mb-4"
         autoresize
       />
