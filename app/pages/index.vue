@@ -134,7 +134,7 @@ watch(isLightboxOpen, (newValue) => {
         </UCard>
       </UModal>
     </div>
-    <p>Background image test</p>
+
   </div>
 </template>
 
