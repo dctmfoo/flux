@@ -1,21 +1,43 @@
 <script setup>
+import { ref, onMounted } from 'vue'
+
 const prompt = ref('')
 const steps = ref(4)
 const src = ref('')
+const gallery = ref([])
 const loading = ref(false)
+
+async function fetchGallery() {
+  try {
+    gallery.value = await $fetch('/api/list-images')
+  } catch (error) {
+    console.error('Error fetching gallery:', error)
+  }
+}
+
 async function generateImage() {
   if (loading.value || !prompt.value) return
   loading.value = true
-  const { pathname } = await $fetch('/api/generate', {
-    method: 'POST',
-    body: {
-      prompt: prompt.value,
-      steps: steps.value,
-    },
-  })
-  src.value = `/images/${pathname}`
-  loading.value = false
+  try {
+    const { pathname } = await $fetch('/api/generate', {
+      method: 'POST',
+      body: {
+        prompt: prompt.value,
+        steps: steps.value,
+      },
+    })
+    src.value = `/images/${pathname}`
+    gallery.value.unshift(pathname) // Add the newly generated image to the gallery
+  } catch (error) {
+    console.error('Error generating image:', error)
+  } finally {
+    loading.value = false
+  }
 }
+
+onMounted(() => {
+  fetchGallery() // Fetch images from R2 bucket on mount
+})
 </script>
 
 <template>
@@ -23,7 +45,7 @@ async function generateImage() {
     <h1 class="text-3xl font-bold">
       Flux-1 Schell Image Generator
     </h1>
-    <form class="w-full" @submit.prevent="generateImage()">
+    <form class="w-full" @submit.prevent="generateImage">
       <UTextarea
         v-model="prompt"
         placeholder="Enter a detailed prompt"
@@ -47,6 +69,14 @@ async function generateImage() {
         Generate
       </UButton>
     </form>
-    <img v-if="src" :src="src" class="w-full max-w-[420px]">
+
+    <img v-if="src" :src="src" class="w-full max-w-[420px] my-4">
+
+    <!-- Gallery Section -->
+    <div v-if="gallery.length > 0" class="gallery grid grid-cols-3 gap-4 w-full mt-6">
+      <div v-for="(image, index) in gallery" :key="index" class="border border-gray-200 rounded-lg overflow-hidden">
+        <img :src="`/images/${image}`" alt="Generated image" class="w-full h-full object-cover">
+      </div>
+    </div>
   </div>
 </template>
