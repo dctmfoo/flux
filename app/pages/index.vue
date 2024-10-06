@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 const prompt = ref('')
 const steps = ref(4)
@@ -8,7 +8,7 @@ const gallery = ref([])
 const loading = ref(false)
 // Lightbox state
 const isLightboxOpen = ref(false)
-const currentLightboxImage = ref('')
+const currentLightboxIndex = ref(0)
 
 async function fetchGallery() {
   try {
@@ -38,13 +38,37 @@ async function generateImage() {
   }
 }
 
-function openLightbox(image) {
-  currentLightboxImage.value = `/images/${image}`
+function openLightbox(index) {
+  currentLightboxIndex.value = index
   isLightboxOpen.value = true
+}
+
+function nextImage() {
+  currentLightboxIndex.value = (currentLightboxIndex.value + 1) % gallery.value.length
+}
+
+function prevImage() {
+  currentLightboxIndex.value = (currentLightboxIndex.value - 1 + gallery.value.length) % gallery.value.length
+}
+
+function handleKeydown(event) {
+  if (!isLightboxOpen.value) return
+  if (event.key === 'ArrowRight') nextImage()
+  if (event.key === 'ArrowLeft') prevImage()
+  if (event.key === 'Escape') isLightboxOpen.value = false
 }
 
 onMounted(() => {
   fetchGallery()
+  window.addEventListener('keydown', handleKeydown)
+})
+
+watch(isLightboxOpen, (newValue) => {
+  if (newValue) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
 })
 </script>
 
@@ -86,20 +110,26 @@ onMounted(() => {
         v-for="(image, index) in gallery"
         :key="index"
         class="border border-gray-200 rounded-lg overflow-hidden cursor-pointer"
-        @click="openLightbox(image)"
+        @click="openLightbox(index)"
       >
         <img :src="`/images/${image}`" alt="Generated image" class="w-full h-full object-cover">
       </div>
     </div>
 
     <!-- Lightbox Modal -->
-    <UModal v-model="isLightboxOpen">
-      <UCard>
+    <UModal v-model="isLightboxOpen" :ui="{ width: 'max-w-3xl' }">
+      <UCard class="relative">
         <img 
-          :src="currentLightboxImage" 
+          :src="`/images/${gallery[currentLightboxIndex]}`" 
           alt="Lightbox image" 
           class="max-w-full max-h-[80vh] object-contain"
         >
+        <div class="absolute top-1/2 left-4 transform -translate-y-1/2">
+          <UButton icon="i-heroicons-chevron-left-20-solid" color="white" variant="ghost" @click="prevImage" />
+        </div>
+        <div class="absolute top-1/2 right-4 transform -translate-y-1/2">
+          <UButton icon="i-heroicons-chevron-right-20-solid" color="white" variant="ghost" @click="nextImage" />
+        </div>
       </UCard>
     </UModal>
   </div>
