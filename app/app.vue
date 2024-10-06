@@ -6,7 +6,16 @@ useSeoMeta({
 </script>
 
 <template>
-  <NuxtRouteAnnouncer />
-  <NuxtLoadingIndicator />
-  <NuxtPage />
+  <div>
+    <NuxtPage />
+  </div>
 </template>
+
+<style>
+/* Remove any global styles that might interfere with our background image */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+</style>

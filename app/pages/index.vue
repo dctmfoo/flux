@@ -134,6 +134,7 @@ watch(isLightboxOpen, (newValue) => {
         </UCard>
       </UModal>
     </div>
+    <p>Background image test</p>
   </div>
 </template>
 
@@ -144,6 +145,7 @@ watch(isLightboxOpen, (newValue) => {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  color: white; /* Add this to ensure text is visible */
 }
 
 /* Existing styles */

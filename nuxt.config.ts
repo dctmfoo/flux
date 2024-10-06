@@ -39,5 +39,9 @@ export default defineNuxtConfig({
   },
 
   // https://devtools.nuxt.com
-  devtools: { enabled: true }
+  devtools: { enabled: true },
+
+  vite: {
+    assetsInclude: ['**/*.jpg', '**/*.png', '**/*.gif'],
+  },
 })
