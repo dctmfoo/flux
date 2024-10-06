@@ -9,8 +9,7 @@ const loading = ref(false)
 
 async function fetchGallery() {
   try {
-    const images = await $fetch('/api/list-images')
-    gallery.value = images.slice(0, 10) // Initially load 10 images
+    gallery.value = await $fetch('/api/list-images')
   } catch (error) {
     console.error('Error fetching gallery:', error)
   }
