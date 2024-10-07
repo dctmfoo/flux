@@ -41,6 +41,11 @@ export default defineNuxtConfig({
     },
   },
 
+  // Add the build configuration
+  build: {
+    transpile: ['@sidebase/nuxt-auth', 'next-auth'],
+  },
+
   runtimeConfig: {
     auth: {
       githubClientId: process.env.GITHUB_CLIENT_ID,
