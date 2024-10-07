@@ -69,3 +69,36 @@ You can also deploy using [Cloudflare Pages CI](https://hub.nuxt.com/docs/gettin
    - `GITHUB_CLIENT_ID`: Your GitHub OAuth App client ID
    - `GITHUB_CLIENT_SECRET`: Your GitHub OAuth App client secret
    - `ORIGIN`: The URL of your deployed app (e.g., https://your-app.pages.dev)
+
+## Deployment
+
+Before deploying, make sure to update the build command in your NuxtHub dashboard:
+
+1. Go to your project settings in the NuxtHub dashboard.
+2. Find the "Build Command" setting.
+3. Change it to: `pnpm install --no-frozen-lockfile && npx nuxi build`
+
+This will ensure that the lock file is updated and dependencies are correctly installed during the build process.
+
+Then, deploy the application on the Edge with [NuxtHub](https://hub.nuxt.com) on your Cloudflare account:
+
+```bash
+npx nuxthub deploy
+```
+
+Then checkout your server logs, analaytics and more in the [NuxtHub Admin](https://admin.hub.nuxt.com).
+
+You can also deploy using [Cloudflare Pages CI](https://hub.nuxt.com/docs/getting-started/deploy#cloudflare-pages-ci).
+
+
+## GitHub Login Setup
+
+1. Go to GitHub Developer Settings: https://github.com/settings/developers
+2. Create a new OAuth App
+3. Set the Authorization callback URL to `https://your-app.pages.dev/api/auth/callback/github`
+4. Note down the Client ID and Client Secret
+5. Set the following environment variables in your NuxtHub dashboard:
+   - `AUTH_SECRET`: A random string used to encrypt cookies and tokens
+   - `GITHUB_CLIENT_ID`: Your GitHub OAuth App client ID
+   - `GITHUB_CLIENT_SECRET`: Your GitHub OAuth App client secret
+   - `ORIGIN`: The URL of your deployed app (e.g., https://your-app.pages.dev)
