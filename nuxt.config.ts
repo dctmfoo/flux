@@ -9,7 +9,8 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     '@nuxt/eslint',
     '@nuxt/ui',
-    '@kgierke/nuxt-basic-auth'
+    '@kgierke/nuxt-basic-auth',
+    '@sidebase/nuxt-auth'
   ],
 
   // https://hub.nuxt.com/docs/getting-started/installation#options
@@ -43,5 +44,10 @@ export default defineNuxtConfig({
 
   vite: {
     assetsInclude: ['**/*.jpg', '**/*.png', '**/*.gif'],
+  },
+
+  auth: {
+    origin: process.env.ORIGIN,
+    enableGlobalAppMiddleware: true
   },
 })

@@ -57,3 +57,15 @@ Then checkout your server logs, analaytics and more in the [NuxtHub Admin](https
 
 You can also deploy using [Cloudflare Pages CI](https://hub.nuxt.com/docs/getting-started/deploy#cloudflare-pages-ci).
 
+
+## GitHub Login Setup
+
+1. Go to GitHub Developer Settings: https://github.com/settings/developers
+2. Create a new OAuth App
+3. Set the Authorization callback URL to `https://your-app.pages.dev/api/auth/callback/github`
+4. Note down the Client ID and Client Secret
+5. Set the following environment variables in your NuxtHub dashboard:
+   - `AUTH_SECRET`: A random string used to encrypt cookies and tokens
+   - `GITHUB_CLIENT_ID`: Your GitHub OAuth App client ID
+   - `GITHUB_CLIENT_SECRET`: Your GitHub OAuth App client secret
+   - `ORIGIN`: The URL of your deployed app (e.g., https://your-app.pages.dev)
