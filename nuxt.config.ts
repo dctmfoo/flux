@@ -1,5 +1,15 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
+declare module 'nuxt/config' {
+  interface NuxtConfig {
+    basicAuth?: {
+      enabled: boolean
+      allowedRoutes: string[]
+      users: Array<{ username: string; password: string }>
+    }
+  }
+}
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-07-30',
   // https://nuxt.com/docs/getting-started/upgrade#testing-nuxt-4
@@ -10,7 +20,6 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     '@nuxt/eslint',
     '@nuxt/ui',
-    '@kgierke/nuxt-basic-auth',
     '@sidebase/nuxt-auth'
   ],
 
