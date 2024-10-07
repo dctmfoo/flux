@@ -1,4 +1,6 @@
 import { NuxtAuthHandler } from '#auth'
-import { authOptions } from '../../../auth.config'
 
-export default NuxtAuthHandler(authOptions)
+export default NuxtAuthHandler({
+  secret: process.env.AUTH_SECRET || 'YKZ5wY5hKVn329BVzol1Yi1Qmgh0wg2+eJvj/UMyhFs=',
+  // ... rest of your config
+})

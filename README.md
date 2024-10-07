@@ -102,3 +102,12 @@ You can also deploy using [Cloudflare Pages CI](https://hub.nuxt.com/docs/gettin
    - `GITHUB_CLIENT_ID`: Your GitHub OAuth App client ID
    - `GITHUB_CLIENT_SECRET`: Your GitHub OAuth App client secret
    - `ORIGIN`: The URL of your deployed app (e.g., https://your-app.pages.dev)
+
+## Environment Variables
+
+The following environment variables need to be set:
+
+- `AUTH_ORIGIN`: The base URL of your application (e.g., `https://your-app-domain.com`)
+- `AUTH_SECRET`: A secret key for NuxtAuth (should be a long, random string)
+
+For local development, you can create a `.env` file in the root of the project with these variables.

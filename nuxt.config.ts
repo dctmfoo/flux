@@ -39,6 +39,7 @@ export default defineNuxtConfig({
     provider: {
       type: 'authjs',
     },
+    baseURL: process.env.AUTH_ORIGIN || `http://localhost:${process.env.PORT || 3000}`
   },
 
   build: {
