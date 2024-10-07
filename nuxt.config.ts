@@ -37,13 +37,17 @@ export default defineNuxtConfig({
       allow: ['/', '/api/auth/**']
     },
     provider: {
-      type: 'nextAuth',
+      type: 'authjs',
     },
   },
 
-  // Add the build configuration
   build: {
-    transpile: ['@sidebase/nuxt-auth', 'next-auth'],
+    transpile: [
+      '@sidebase/nuxt-auth',
+      'next-auth',
+      '@auth/core',
+      '@sidebase/nuxt-auth/dist/runtime/composables/nextAuth/useAuth'
+    ],
   },
 
   runtimeConfig: {
