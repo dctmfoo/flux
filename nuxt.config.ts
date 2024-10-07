@@ -45,8 +45,7 @@ export default defineNuxtConfig({
     transpile: [
       '@sidebase/nuxt-auth',
       'next-auth',
-      '@auth/core',
-      '@sidebase/nuxt-auth/dist/runtime/composables/nextAuth/useAuth'
+      '@auth/core'
     ],
   },
 
@@ -65,5 +64,10 @@ export default defineNuxtConfig({
         }
       ]
     }
+  },
+
+  // Add this to resolve the next-auth/core issue
+  alias: {
+    'next-auth/core': 'next-auth'
   }
 })
