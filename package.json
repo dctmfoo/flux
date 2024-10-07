@@ -10,7 +10,7 @@
     "deploy": "npx nuxthub deploy",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "preinstall": "npx pnpm@9.12.0 install --no-frozen-lockfile"
+    "update-lockfile": "pnpm install --no-frozen-lockfile"
   },
   "dependencies": {
     "@kgierke/nuxt-basic-auth": "^1.6.0",

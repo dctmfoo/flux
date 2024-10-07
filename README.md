@@ -76,7 +76,7 @@ Before deploying, make sure to update the build command in your NuxtHub dashboar
 
 1. Go to your project settings in the NuxtHub dashboard.
 2. Find the "Build Command" setting.
-3. Change it to: `pnpm install --no-frozen-lockfile && npx nuxi build`
+3. Change it to: `pnpm run update-lockfile && pnpm run build`
 
 This will ensure that the lock file is updated and dependencies are correctly installed during the build process.
 
