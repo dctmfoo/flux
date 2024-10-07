@@ -49,6 +49,16 @@ export default defineNuxtConfig({
 
   auth: {
     origin: process.env.ORIGIN,
-    enableGlobalAppMiddleware: true
+    enableGlobalAppMiddleware: true,
+    globalMiddlewareOptions: {
+      allow: ['/', '/api/auth/**']
+    }
   },
+
+  runtimeConfig: {
+    auth: {
+      githubClientId: process.env.GITHUB_CLIENT_ID,
+      githubClientSecret: process.env.GITHUB_CLIENT_SECRET
+    }
+  }
 })
